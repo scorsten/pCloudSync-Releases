@@ -1,0 +1,163 @@
+# Changelog
+
+Alle nennenswerten Änderungen an pCloud Sync werden in dieser Datei festgehalten.
+Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/) an, die Versionsnummern folgen
+[Semantic Versioning](https://semver.org/lang/de/).
+
+Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
+(Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
+
+## 1.1.1 – 2026-09-28
+
+### Geändert
+
+- Programmdateien, Windows-11-Paket und Setup sind mit einem öffentlich vertrauenswürdigen Zertifikat signiert
+  (Azure Artifact Signing): Keine SmartScreen-Warnung mehr wegen eines unbekannten Herausgebers, keine UAC-Abfrage für
+  ein Paketzertifikat. Ein früher installiertes, selbst signiertes Kontextmenü-Paket wird beim Update ersetzt.
+- Setups und Updates kommen aus dem öffentlichen Download-Repository
+  [scorsten/pCloudSync-Releases](https://github.com/scorsten/pCloudSync-Releases). Installationen bis 1.0.1 finden
+  dieses Update nicht von selbst (sie fragen das private Quell-Repository ab) – einmal von Hand installieren.
+
+## 1.1.0 – 2026-09-28
+
+### Neu
+
+- **Blockweiser Upload geänderter großer Dateien** (Einstellungen → Synchronisation, standardmäßig an ab 8 MB): Statt die
+  ganze Datei erneut zu übertragen, werden nur geänderte Blöcke über die Datei-API von pCloud (`file_open`,
+  `file_checksum`, `file_pwrite`, `file_truncate`, `file_close`) in die bestehende Datei geschrieben – als neue Revision,
+  der Versionsverlauf bleibt. Blockgröße 4 MB (bei sehr großen Dateien bis 64 MB, höchstens 1024 Blöcke); die Blockhashes
+  des letzten Uploads liegen in `state.db` (Tabelle `blocks`), sonst fragt der Client die Prüfsummen je Block beim Server
+  ab. Nach dem Schreiben wird der SHA-1 der ganzen Datei gegen pCloud geprüft; bei jeder Abweichung folgt der vollständige
+  Upload. Eingefügte oder entfernte Bytes verschieben alles dahinter, das wird dann neu geschrieben (Protokoll:
+  „Änderung blockweise hochgeladen: … (n von m Blöcken, x von y MB)“).
+- **Pause auf Zeit:** *Pausieren* bietet 2 Stunden, 8 Stunden, 24 Stunden oder „Bis ich fortsetze“; *Fortsetzen* zeigt
+  den Zeitpunkt der automatischen Fortsetzung („Fortsetzen (sonst automatisch um 17:30)“).
+- **Speicherplatz** des Kontos in der Kopfzeile des Tray-Menüs und im Tooltip („3,2 von 5,4 TB belegt“), stündlich
+  aktualisiert.
+- **Papierkorb (Browser)** und **Rewind – Zeitpunkt wiederherstellen (Browser)** im Tray-Menü je Konto (pCloud-Papierkorb
+  bzw. Rewind auf my.pcloud.com, passend zum Rechenzentrum des Kontos).
+- **Freigabe-Anfragen:** Lädt jemand ein pCloud-Konto zu einem Ordner ein, erscheint eine Benachrichtigung („… möchte
+  „Projekt“ mit dir teilen“); ein Klick öffnet die Freigaben in pCloud zum Annehmen.
+- **Nur-Lese-Freigaben:** In Ordnern, die andere nur zum Lesen freigegeben haben, werden Dateien mit Schreibschutz
+  angelegt; lokale Änderungen darin werden nicht hochgeladen (einmalige Warnung je Datei im Protokoll statt endloser
+  Fehlversuche).
+- **pCloud Crypto** wird übersprungen: Clientseitig verschlüsselte Ordner erscheinen weder lokal noch in der
+  Ordnerauswahl (Namen und Inhalte wären nur Chiffrat).
+- **Windows-Suche:** Der Sync-Ordner wird beim Verbinden in den Suchindex aufgenommen und beim Trennen wieder entfernt
+  (Suche im Explorer und im Startmenü findet auch Nur-online-Dateien nach Namen).
+- **Statusflyout des Explorers** (Windows 11 ab Build 23504): Ein Klick auf das Wolkensymbol in der Adressleiste zeigt
+  Zustand, Speicherplatz und Aktionen (pCloud im Browser öffnen, Pausieren/Fortsetzen, Aktivität und Protokoll,
+  Einstellungen). Setzt das signierte Windows-11-Paket voraus; ohne laufende App meldet das Flyout „pCloud Sync läuft
+  nicht“.
+- **Paket-Handler wie bei Dropbox:** Das Windows-11-Paket deklariert die Cloud-Files-Handler (Vorschaubilder, Zustände,
+  Eigenschaften, Statusflyout) im Manifest, und der Sync-Root erhält den `AUMID` des Pakets – Windows findet die
+  Handler so über das Paket und nicht nur über die Registry-Einträge.
+- **Download-Repository:** Releases erscheinen zusätzlich im öffentlichen Repository `scorsten/pCloudSync-Releases`
+  (Setup, `SHA256SUMS.txt`, Changelog – keine Quellen); die Update-Prüfung der App fragt dieses Repository ab, damit
+  sie auch bei privatem Quell-Repository funktioniert. Das Setup zeigt einen Endnutzer-Lizenzvertrag (`EULA.txt`).
+- **Öffentlich vertrauenswürdige Signatur** (CI): Mit den Repository-Secrets/-Variablen für *Azure Artifact Signing*
+  werden Programmdateien, Windows-11-Paket und Setup mit einem öffentlich vertrauenswürdigen Zertifikat signiert (der
+  Publisher des Pakets wird aus dem Zertifikat übernommen). Das Setup braucht dann keine UAC-Abfrage mehr für das
+  Zertifikat, SmartScreen kennt den Herausgeber, und ein früher registriertes Paket mit dem selbst ausgestellten
+  Zertifikat wird beim Update ersetzt. Ohne diese Einstellungen bleibt es bei den bisherigen PFX-Secrets.
+
+### Geändert
+
+- Die lokale Änderungszeit einer synchronen Datei wird auf die Millisekunde genau gespeichert (`state.db`, Spalte
+  `lmod`); der schnelle „unverändert“-Test vergleicht exakt statt mit ±2 s Toleranz. Bestehende Zustandsdateien werden
+  beim ersten Abgleich nachgezogen; bis dahin gilt für alte Einträge ein Fenster von einer Sekunde nach der
+  pCloud-Änderungszeit.
+- Die Shell-DLL wird als C++20 gebaut (C++/WinRT für das Statusflyout).
+
+## 1.0.1 – 2026-09-28
+
+### Behoben
+
+- Kontextmenü „pCloud ▸“ erschien im klassischen Menü doppelt, wenn das Windows-11-Paket installiert ist: Der
+  Paket-Befehl gilt für das neue und das klassische Menü, der zusätzliche Registry-Eintrag entfällt jetzt, sobald das
+  Paket registriert ist.
+- Vorschaubilder für Nur-online-Dateien: Der Handler wird beim Start als COM-Klasse des Benutzers registriert
+  (`HKCU\Software\Classes\CLSID`, unabhängig vom Paket) und der Eintrag `ThumbnailProvider` am Sync-Root wird
+  zuverlässig geschrieben – direkt oder, falls Windows den Schreibzugriff verweigert, einmalig nach einer UAC-Abfrage
+  (eine Ablehnung wird gemerkt). Das Ergebnis steht auf Info-/Warn-Stufe im Protokoll statt nur im ausführlichen
+  Protokoll; ein unwirksamer HKCU-Spiegel des Eintrags wird entfernt.
+- Protokolldateien beginnen mit UTF-8-BOM, damit Windows PowerShell und Editor Umlaute richtig lesen.
+
+### Geändert
+
+- Ohne laufende App kein Kontextmenü „pCloud ▸“ mehr (wie bei Dropbox): *Beenden* entfernt den klassischen Eintrag und
+  die Registrierung des Vorschaubild-Handlers, der nächste Start legt sie wieder an; das Paket-Menü blendet sich
+  außerdem aus, sobald die Anwendung nicht läuft (auch nach einem Absturz). Die Sync-Root-Registrierung – und damit
+  die Cloud-Statussymbole – bleibt bewusst bestehen: Ein abgemeldeter Sync-Root macht Nur-online-Dateien unzugänglich
+  (Windows entfernt die Platzhalter), und der nächste Start müsste sie für lokale Löschungen halten.
+
+## 1.0.0 – 2026-09-28
+
+### Neu
+
+- Mehrere pCloud-Konten gleichzeitig („Konto hinzufügen …“ im Tray-Menü): Jedes Konto hat einen eigenen Sync-Ordner,
+  pCloud-Ordner, eigene Speicher-Optionen und Ausschlüsse, eine eigene Zustandsdatei (`state-<Kennung>.db`) und einen
+  eigenen Zugang im Anmeldeinformationsspeicher (`PCloudSync:account:<Kennung>`). Das Tray-Menü zeigt je Konto einen
+  Abschnitt, das Kontextmenü gilt in allen Sync-Ordnern, KFM fragt nach dem Zielkonto, das Aktivitätsfenster fasst
+  alle Konten zusammen. Ein Konto kann nur einmal verbunden werden. Bestehende Installationen werden beim ersten Start
+  automatisch übernommen (bisheriges Konto = Profil `default`; Zugang und Zustandsdatei behalten ihre Namen).
+- Selektive Synchronisation („Ordner auswählen …“ je Konto): pCloud-Ordner im Baum abwählen, Unterordner werden beim
+  Aufklappen geladen. Abgewählte Ordner werden lokal entfernt (in pCloud bleibt alles erhalten), wieder angehakte aus
+  pCloud nachgezogen. Der Ausschluss hängt an der Ordner-Id und überlebt Umbenennungen; er wird abgelehnt, solange
+  darunter noch etwas auf den Upload wartet. Ein lokal angelegter Ordner mit dem Namen eines abgewählten pCloud-Ordners
+  wird nicht hochgeladen (Warnung im Protokoll).
+- Auto-Pause bei getakteter Verbindung (Mobilfunk, Hotspot, „getaktet“ in den Windows-Einstellungen, Datenlimit,
+  Roaming) und im Energiesparmodus – beide Optionen unter Einstellungen → Synchronisation, standardmäßig an. Die
+  Synchronisation läuft automatisch weiter, sobald die Bedingung endet; Dateien öffnen funktioniert währenddessen.
+  „Trotzdem fortsetzen“ übersteuert bis zum Ende der Bedingung, eine manuelle Pause hat Vorrang.
+- Ransomware-Schutz (standardmäßig an): Heuristik über die lokal geänderten Dateien der letzten 10 Minuten –
+  Umbenennungen in unbekannte Dateiendungen, angehängte Endungen (`bericht.docx.locked`), verschlüsselt wirkender
+  Inhalt in normalerweise unkomprimierten Dateitypen. Ab 30 Änderungen mit 60 % Auffälligen, einer unbekannten Endung
+  an 30 Dateien oder 25 verschiedenen unbekannten Endungen hält pCloud Sync die Uploads an und fragt: „Pausieren und
+  PC prüfen“ oder „Weiter synchronisieren“. Als bekannt gelten eine eingebaute Liste, alle Endungen des Kontos und
+  gelernte Endungen; Laden bei Bedarf und Änderungen aus pCloud laufen bei Verdacht weiter.
+- Vorschaubilder für Nur-online-Dateien im Explorer, ohne die Datei zu laden: Thumbnail-Handler in der Shell-DLL
+  (COM-Klasse im Windows-11-Paket, als `ThumbnailProvider` am Sync-Root eingetragen), Bild von pCloud (`getthumb`)
+  über die laufende App. Nur mit dem signierten Windows-11-Paket; der Handler-Eintrag am Sync-Root ist Best Effort.
+- Auto-Update über GitHub Releases: tägliche Prüfung (Einstellungen → Allgemein, abschaltbar) und „Nach Updates
+  suchen …“ im Tray-Menü. Das Setup wird nach `%LOCALAPPDATA%\PCloudSync\updates` geladen, gegen `SHA256SUMS.txt`
+  des Releases geprüft und still installiert
+  (`/SILENT /SUPPRESSMSGBOXES /NORESTART /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS`); nach der Aktualisierung startet
+  das Programm automatisch neu. „Später“ überspringt die angebotene Version, sie bleibt als „Update auf …
+  installieren …“ im Menü.
+- Signierte Builds: Programmdateien und Setup werden in der CI mit Zeitstempel signiert, sobald ein Zertifikat
+  (Secrets `CODESIGN_PFX` und `CODESIGN_PFX_PASSWORD`) hinterlegt ist; ohne Zertifikat bleibt der Build unsigniert.
+- Neue Tests: zwei Konten in einem Prozess, selektive Synchronisation, Auto-Pause und Ransomware-Muster (End-to-End);
+  Kontoprofile, Update-Prüfung und -Download, Systembedingungen, Ransomware-Heuristik und Vorschaubilder (Unit);
+  Vorschaubild-Handler der Shell-DLL (DLL-Test).
+
+### Geändert
+
+- Versionsschema: Releases heißen ab jetzt `X.Y.Z` (Git-Tag `vX.Y.Z`), CI-Builds `1.0.<Laufnummer>`. Ein Tag `vX.Y.Z`
+  erzeugt ein GitHub Release mit Setup, `SHA256SUMS.txt` und dem Abschnitt dieser Version aus `CHANGELOG.md`.
+- Jedes Release und jedes CI-Artefakt liefert neben dem Setup eine `SHA256SUMS.txt` zur Prüfung des Downloads.
+- Einstellungen: neuer Bereich „Konten“ (je Konto Lokaler Ordner, pCloud-Ordner, Neue Dateien, Max. Cache, Rückfrage
+  ab Löschungen, Nicht hochladen); „Anmeldung“, „Synchronisation“ und „Allgemein“ gelten für alle Konten. Der bisherige
+  Bereich „Speicherplatz“ ist im Bereich „Konten“ aufgegangen.
+- Kontextmenü: die `AppliesTo`-Bedingung und die Konfiguration der Shell-DLL (`SyncRoots`, REG_MULTI_SZ) umfassen alle
+  Sync-Ordner; Befehle gehen an das Konto, zu dessen Ordner das Element gehört.
+- Rückfragen (viele Löschungen, Ransomware-Verdacht) nennen das betroffene Konto im Titel.
+- Ein nie angemeldetes Konto lässt sich über „Konto entfernen …“ aus der Liste nehmen, ohne zu trennen.
+- `--reset-state` löscht die Zustandsdateien aller Konten (`state*.db*`).
+- CI: End-to-End-Tests laufen mit `--blame`, das Engine-Protokoll der Tests landet als Datei im Artefakt
+  `test-results`.
+- Dokumentation (README, Benutzerhandbuch, technische Referenz) auf Stand 1.0.0 mit Abschnitten zu allen neuen
+  Funktionen.
+
+### Behoben
+
+- Dokumentation: ein versehentliches Blockzitat in der technischen Referenz entfernt; senkrechte Striche in
+  Tabellenzellen maskiert.
+
+## 0.1.48
+
+Stand vor 1.0: nativer Windows-Sync-Client für pCloud auf Basis der Cloud Files API mit Platzhaltern
+(Dateien nur online, bei Bedarf lokal, immer behalten), Known Folder Move für Desktop, Dokumente, Bilder, Musik,
+Videos und Downloads, Kontextmenü im Explorer (klassisch und Windows 11), Freigaben (öffentliche Links, Ordner
+teilen, Upload-Links), Dateiversionen mit Wiederherstellung, Speicherverwaltung (Cache-Obergrenze, Platz freigeben,
+Bandbreitenbegrenzung) sowie Benutzerhandbuch und technische Referenz.
