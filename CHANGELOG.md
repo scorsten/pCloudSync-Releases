@@ -7,6 +7,15 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.1.4 – 2026-09-29
+
+### Behoben
+
+- Lokal vorhandene Dateien im Sync-Ordner zeigten kein Vorschaubild: Der Handler lehnte sie ab, damit Explorer seine
+  normalen Handler nimmt – das tut Explorer bei Sync-Roots aber nicht. Jetzt reicht die Shell-DLL die Anfrage an den
+  für die Dateiendung registrierten Vorschaubild-Handler weiter (Fotos, Videos, PDFs …) und dekodiert Bilder ohne
+  registrierten Handler selbst (WIC). pCloud Sync muss dafür nicht laufen.
+
 ## 1.1.3 – 2026-09-28
 
 ### Behoben
