@@ -7,13 +7,26 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.1.2 – 2026-09-28
+
+### Behoben
+
+- Vorschaubilder für Nur-online-Dateien blieben leer: Der API-Host von pCloud beantwortet `getthumb` teils mit Fehler
+  5002 („no servers available“). Der Client holt das Bild dann über `getthumblink` vom Content-Server – wie bei
+  Downloads – und bleibt für die Sitzung bei diesem Weg (Info-Zeile im Protokoll).
+- Der Crypto-Tresor `Crypto Folder` im pCloud-Stammordner wird auch ohne eingerichtetes Crypto (pCloud setzt das Flag
+  `encrypted` erst dann) nicht mehr synchronisiert und nicht in der Ordnerauswahl angeboten; eine vorhandene lokale
+  Kopie wird entfernt (in pCloud bleibt er unberührt).
+- Eine `desktop.ini` über 1 MB (in pCloud z. B. durch einen verunglückten Upload eines anderen Programms) lädt Explorer
+  nicht mehr beim Öffnen des Ordners komplett herunter: Explorer erhält „Zugriff verweigert“, einmalige Warnung im
+  Protokoll. Öffnen oder Kopieren der Datei durch andere Programme lädt sie weiterhin.
+
 ## 1.1.1 – 2026-09-28
 
 ### Geändert
 
-- Programmdateien, Windows-11-Paket und Setup sind mit einem öffentlich vertrauenswürdigen Zertifikat signiert
-  (Azure Artifact Signing): Keine SmartScreen-Warnung mehr wegen eines unbekannten Herausgebers, keine UAC-Abfrage für
-  ein Paketzertifikat. Ein früher installiertes, selbst signiertes Kontextmenü-Paket wird beim Update ersetzt.
+- Signatur über Azure Artifact Signing ist in der CI eingerichtet, griff für diesen Build aber noch nicht (Zugangsdaten
+  unvollständig) – 1.1.1 ist wie 1.1.0 unsigniert.
 - Setups und Updates kommen aus dem öffentlichen Download-Repository
   [scorsten/pCloudSync-Releases](https://github.com/scorsten/pCloudSync-Releases). Installationen bis 1.0.1 finden
   dieses Update nicht von selbst (sie fragen das private Quell-Repository ab) – einmal von Hand installieren.
