@@ -7,6 +7,19 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.1.3 – 2026-09-28
+
+### Behoben
+
+- Vorschaubilder für Nur-online-Dateien: Der Client forderte PNG an (`type=png`); die Vorschau-Server von pCloud
+  beantworteten das mit 5002 bzw. HTTP 503, während die Weboberfläche (JPEG) Vorschaubilder zeigte. Jetzt kommt JPEG,
+  die Shell-DLL erkennt das Format selbst.
+
+### Geändert
+
+- Vorschaubilder: Antwortet pCloud mit 503 bzw. 5xxx (Vorschau wird erst erzeugt), fragt der Client innerhalb des
+  Zeitrahmens von Explorer zweimal nach (nach 0,4 s und 1,2 s); die App wartet 4,5 s statt 4 s.
+
 ## 1.1.2 – 2026-09-28
 
 ### Behoben
