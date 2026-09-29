@@ -7,6 +7,15 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.2.2 – 2026-09-29
+
+### Geändert
+
+- Vorschaubilder erscheinen beim Scrollen sofort: Explorer fragt Vorschaubilder nur für sichtbare Dateien an. pCloud
+  Sync füllt deshalb nach dem Vorausladen im Hintergrund den Vorschaubild-Cache von Windows (`IThumbnailCache`,
+  dieselben `thumbcache_*.db`, die Explorer liest) für die umliegenden Dateien – beim Scrollen findet Explorer die Bilder
+  dort und zeigt sie ohne Nachladen, wie bei lokalen Dateien. Das Fenster ist größer (300 Dateien danach, 100 davor).
+
 ## 1.2.1 – 2026-09-29
 
 ### Geändert
