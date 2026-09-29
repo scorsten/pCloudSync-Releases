@@ -7,6 +7,17 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.1.5 – 2026-09-29
+
+### Geändert
+
+- Vorschaubilder schneller: Die erste Anfrage in einem Ordner lädt die Vorschauen aller übrigen Nur-online-Bilder,
+  -Videos und PDFs des Ordners parallel voraus (6 gleichzeitig, höchstens 400 je Ordner); Explorers folgende Anfragen
+  kommen sofort. Geladene Vorschauen liegen unter `%LOCALAPPDATA%\PCloudSync\thumbs` (Schlüssel: pCloud-Inhaltshash und
+  Größe, höchstens 200 MB, die am längsten unbenutzten zuerst entfernt) und überstehen Neustarts und das Leeren des
+  Explorer-Caches. Gleichzeitige Anfragen für dasselbe Bild teilen sich einen Abruf; bricht Explorer ab, landet das Bild
+  trotzdem in der Ablage. Dateien ohne Vorschau werden 30 Minuten nicht erneut angefragt.
+
 ## 1.1.4 – 2026-09-29
 
 ### Behoben
