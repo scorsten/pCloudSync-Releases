@@ -7,6 +7,24 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.4.0 – 2026-09-29
+
+### Neu
+
+- **Lizenz kaufen** direkt aus der App: *Lizenz …* → *Lizenz kaufen …* öffnet die Kaufseite des Lizenzservers
+  (1 PC 19 €, 3 PCs 39 €, Einmalkauf). Bezahlt wird über Paddle als Merchant of Record (Paddle verkauft, führt die
+  Umsatzsteuer ab und stellt die Rechnung aus). Nach der Zahlung stellt der Lizenzserver den Schlüssel aus, zeigt ihn
+  auf der Kaufseite, und pCloud Sync holt ihn mit einem Abholschlüssel ab und aktiviert ihn selbst – auch nach
+  geschlossenem Fenster oder Neustart (bis zu zwei Tage).
+- Lizenzserver: Kaufseite `api/buy` (Paddle.js-Overlay), Webhook `api/paddle` (HMAC-Signatur, idempotent je
+  Transaktion), Abholung `api/claim`, Support-Abfrage `api/admin/orders`; Tabelle `Orders`. Ohne Paddle-Einstellungen
+  bleibt der Verkauf aus (503).
+- `tools/Set-PaddleShop.ps1` setzt die Paddle-Einstellungen (Geheimnisse verdeckt abgefragt),
+  `pcs-license orders <E-Mail|txn_…>` zeigt gekaufte Lizenzen.
+- Hinweise der Basisversion bieten jetzt „Lizenz kaufen oder eingeben …“ an.
+- Die Karte *Lizenz kaufen* erscheint nur, wenn der Lizenzserver den Verkauf anbietet (`api/shop`, mit Angeboten und
+  Preisen); vorher bleibt das Lizenz-Fenster wie bisher.
+
 ## 1.3.1 – 2026-09-29
 
 ### Neu
