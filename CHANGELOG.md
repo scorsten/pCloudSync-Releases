@@ -7,6 +7,26 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.3.0 – 2026-09-29
+
+### Neu
+
+- **Konflikte lösen** (wie bei OneDrive): Wird eine Datei hier und in pCloud (oder auf einem anderen Gerät) gleichzeitig
+  geändert, behält pCloud Sync wie bisher beide Fassungen – neu ist die Auswahl, welche bleibt. Eine Benachrichtigung
+  meldet den Konflikt (Klick öffnet den Dialog), das Tray-Menü zeigt *N Konflikte lösen …*, im Explorer steht auf der
+  Konfliktkopie *pCloud › Konflikt lösen …*. Im Dialog je Konflikt: **Diese Kopie behalten** (ersetzt das Original –
+  dieselbe Datei, in pCloud eine neue Version, der alte Stand bleibt unter *Versionen*), **Original behalten** (Kopie
+  wird gelöscht, in pCloud Papierkorb) oder **Beide behalten** (Kopie bekommt einen neutralen Namen
+  `Bericht (PC 2026-09-29 1015).docx`); *Beide öffnen* zum Vergleichen. Erkannt werden auch Konfliktkopien anderer
+  Rechner.
+- **Freigabe- und Konfliktstatus im Explorer:** Die Spalte *Status* zeigt neben dem Synchronisationssymbol ein Symbol für
+  freigegebene Ordner und ihren Inhalt – *Von dir freigegeben*, *Für dich freigegeben* bzw. *… – nur lesen* (Tooltip) –
+  und ein Warnsymbol auf Konfliktkopien. Umgesetzt als CustomStateHandler der Shell-DLL; die App trägt die
+  freigegebenen Ordner in `HKCU\Software\PCloudSync\Shell` (`Shares`) ein, der Explorer fragt dafür nichts über die
+  Befehls-Pipe ab. Nach dem Update fragt Windows einmalig per UAC, um den Handler am Sync-Root einzutragen.
+- **Über Windows teilen:** Im Freigeben-Dialog öffnet *Über Windows teilen …* das Teilen-Fenster von Windows (E-Mail,
+  Outlook, Teams, Nearby Sharing, …) mit dem pCloud-Link – Ablauf, Download-Limit und Passwort gelten wie gewählt.
+
 ## 1.2.2 – 2026-09-29
 
 ### Geändert
