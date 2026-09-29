@@ -7,6 +7,37 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.2.0 – 2026-09-29
+
+### Neu
+
+- **Lizenzierung.** Nach der Installation 30 Tage alle Funktionen (Testphase), danach ohne Lizenz die Basisversion:
+  ein pCloud-Konto, Platzhalter und Synchronisation in beide Richtungen, Behalten/Freigeben, Links, Auto-Pause,
+  Bandbreite, Ransomware- und Löschschutz, Updates. Zur Vollversion gehören außerdem mehrere Konten, Known Folder Move,
+  Ordnerauswahl, blockweiser Upload, Vorschaubilder für Nur-online-Dateien sowie der Freigeben- und Versionen-Dialog.
+  Tray-Menü → *Lizenz …*: Status, Schlüssel eingeben, *Diesen PC freigeben*. Weitere Konten laufen nur in der
+  Vollversion (das erste Konto immer); bestehende KFM-Umleitungen und Ordnerausschlüsse bleiben in der Basisversion
+  wirksam.
+- **Lizenzen mit Gerätezahl:** Ein Lizenzschlüssel (signiert, Präfix `PCS1.`) gilt für eine Anzahl PCs. Der
+  Lizenzserver (Azure Function + Table Storage) zählt die registrierten PCs (Geräte-Id aus der Windows-MachineGuid,
+  gehasht) und stellt einen signierten Beleg aus, den die App alle 30 Tage erneuert; bis zu 30 Tage ohne Internet sind
+  unkritisch. Ein freigegebener PC gibt seinen Platz zurück. **Generallizenzen** gelten ohne Gerätezahl und ohne
+  Online-Registrierung.
+- **Lizenzgenerator** `pcs-license` (Kommandozeile, CI-Artefakt): Schlüsselpaare anlegen (`init`), Lizenzen
+  (`create --seats N [--expires]`) und Generallizenzen (`master`) erzeugen, Schlüssel prüfen (`show`), registrierte PCs
+  anzeigen/freigeben und Lizenzen sperren (`devices`, `release`, `revoke`). `tools/Deploy-LicenseServer.ps1` richtet den
+  Lizenzserver in Azure ein und setzt die Build-Variablen. Die privaten Schlüssel bleiben auf dem PC des Anbieters bzw.
+  in den App-Einstellungen der Function App.
+
+### Geändert
+
+- **.NET 10 (LTS):** App, Tests, Lizenzserver (Azure Functions, isolierter Worker) und Lizenzgenerator laufen auf
+  .NET 10; .NET 8 erreicht am 10.11.2026 das Supportende. Das Setup bleibt eigenständig (keine Runtime-Installation nötig).
+- **Schnelleres Laden großer Dateien:** Fordert Windows einen Bereich ab 32 MB an (Kopieren, „Immer behalten“, Videos),
+  lädt pCloud Sync ihn über bis zu vier parallele Range-Verbindungen statt über eine – wie OneDrive. Jedes Teilstück
+  prüft die Dateigröße gegen den Platzhalter; scheitert eines, werden die übrigen abgebrochen und nur die fehlenden
+  Reste als Fehler gemeldet.
+
 ## 1.1.5 – 2026-09-29
 
 ### Geändert
