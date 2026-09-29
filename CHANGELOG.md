@@ -7,6 +7,20 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.3.1 – 2026-09-29
+
+### Neu
+
+- **Bestehende Freigaben im Freigeben-Dialog:** Oben listet der Dialog die vorhandenen Links, Upload-Links und – bei
+  Ordnern – die Personen mit Zugriff bzw. offene Einladungen (Rechte, erstellt, läuft ab). *Link kopieren*, *Nur lesen* /
+  *Lesen und schreiben erlauben* (Rechte einer angenommenen Freigabe ändern) und *Löschen* / *Freigabe beenden*
+  (Link löschen, Freigabe entfernen, Einladung zurückziehen).
+- **Links in der Statusspalte:** Dateien und Ordner mit öffentlichem Link oder Upload-Link zeigen ein Kettensymbol
+  (*Öffentlicher Link*); freigegebene Ordner erkennt pCloud Sync jetzt auch über die Freigabeliste von pCloud, nicht nur
+  über die Metadaten. Gelesen wird alle 15 Minuten und sofort nach Änderungen im Freigeben-Dialog.
+- Bei Dateien erklärt der Freigeben-Dialog, dass pCloud nur Ordner an Personen freigibt (dort mit *Nur lesen* oder
+  *Lesen und schreiben*), und bietet *Ordner „…“ freigeben …* für den enthaltenden Ordner an.
+
 ## 1.3.0 – 2026-09-29
 
 ### Neu
