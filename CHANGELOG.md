@@ -7,6 +7,15 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.2.1 – 2026-09-29
+
+### Geändert
+
+- Vorschaubilder in großen Ordnern: Statt nur die ersten 400 Dateien eines Ordners vorauszuladen, lädt jede Anfrage die
+  Umgebung der gerade angezeigten Datei (150 danach, 50 davor in Namensreihenfolge) mit 10 gleichzeitigen Abrufen. Neue
+  Anfragen haben Vorrang, beim Scrollen durch Ordner mit Tausenden Bildern bleibt der sichtbare Bereich vorn. Neuer
+  Index auf Ordner und Namen in der Zustandsdatei.
+
 ## 1.2.0 – 2026-09-29
 
 ### Neu
