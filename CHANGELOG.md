@@ -7,6 +7,15 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.5.2 – 2026-09-30
+
+### Geändert
+
+- **Klare Meldung bei Anmeldung über eine eigene pCloud-App:** pCloud lehnt mit OAuth-Tokens eigener Apps Versionen,
+  Upload-Links und Freigaben an Personen ab (1000 „Log in required“ bzw. 2076). Versionen- und Freigeben-Dialog zeigen
+  jetzt den Grund und den Weg zur Abhilfe (*Einstellungen → Anmeldung → E-Mail und Passwort*, dann *Neu anmelden …*)
+  statt der Rohmeldung. Handbuch 3.2 beschreibt die Einschränkung.
+
 ## 1.5.1 – 2026-09-30
 
 ### Behoben
