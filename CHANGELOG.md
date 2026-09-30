@@ -7,6 +7,23 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.6.0 – 2026-09-30
+
+### Entfernt
+
+- **Anmeldung über eine eigene pCloud-App (OAuth):** pCloud verweigert solchen Zugängen Versionen, Upload-Links und
+  Freigaben an Personen. Angemeldet wird nur noch mit E-Mail und Passwort (Zwei-Faktor wird unterstützt; gespeichert wird
+  nur ein Token, nie das Passwort). Die Seite *Anmeldung* der Einstellungen entfällt. Ein noch vorhandener App-Zugang
+  synchronisiert weiter; nach dem Start bittet eine Benachrichtigung um *Neu anmelden …* (Klick öffnet die Anmeldung,
+  Sync-Ordner und Zustand bleiben). Das gespeicherte Client-Secret wird aus dem Anmeldeinformationsspeicher entfernt.
+
+### Behoben
+
+- **Einstellungen:** Eingaben, Kontrollkästchen und Optionsfelder wurden rechts abgeschnitten (besonders mit längeren
+  Übersetzungen). Die Seiten passen sich jetzt der Fensterbreite an: lange Texte brechen um, zu breite Felder werden
+  schmaler; das Fenster ist etwas breiter. Einige Beschriftungen (*Konto:*, *pCloud-Ordner:*, *Max. Cache:*,
+  Platzhaltertext der Ausschlüsse, belegter Cache, Anmeldedialog) waren noch nicht übersetzt.
+
 ## 1.5.2 – 2026-09-30
 
 ### Geändert
