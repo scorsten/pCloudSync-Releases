@@ -1,7 +1,7 @@
 # pCloud Sync – Benutzerhandbuch
 
 Dieses Handbuch beschreibt die Bedienung von pCloud Sync (pCloudSyncClient) aus Sicht der Anwenderin und des Anwenders
-(Stand 1.5.0). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
+(Stand 1.5.1). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
 
 ## Inhalt
 
@@ -854,7 +854,7 @@ Select-String -Path "$env:LOCALAPPDATA\PCloudSync\logs\*" -Pattern 'WARN|ERROR|s
 | Rückfrage **Verdächtige Massenänderung**, aber die Änderungen sind gewollt | *Weiter synchronisieren* – die Endungen gelten danach als bekannt. Bei wiederholten Fehlalarmen eines Programms den Schutz in den Einstellungen abschalten (siehe [17](#17-ransomware-schutz)). |
 | Online-Datei lässt sich nicht öffnen | Client beendet oder offline. Client starten bzw. Verbindung prüfen. |
 | Keine Vorschaubilder für Online-Dateien | Nur bei laufendem Client und nur für Bilder, Videos und Dokumente. COM-Registrierung und Eintrag am Sync-Root prüfen, Protokollzeile „Vorschaubild-Handler …“ lesen (siehe [10](#10-vorschaubilder-für-nur-online-dateien)). |
-| Kontextmenü-Befehl tut nichts | Aktivitätsfenster prüfen: erscheint `Kontextmenü: …`? Wenn nicht, ist die Registrierung veraltet – Client neu starten (registriert das Menü beim Start neu). |
+| Kontextmenü-Befehl tut nichts | Aktivitätsfenster prüfen: erscheint `Kontextmenü: …`? Wenn nicht, ist die Registrierung veraltet – Client neu starten: Er registriert das Menü beim Start neu und repariert seit 1.5.1 auch ein nach einem Update defektes Windows-11-Paket (Protokoll „Kontextmenü-Paket …“). Zustand prüfen: `Get-AppxPackage PCloudSyncClient.Shell` – `Status` muss `Ok` sein, `Version` zur App passen. |
 | „… liegt nicht im pCloud-Ordner“ | Das Element liegt in keinem Sync-Ordner eines verbundenen Kontos (z. B. Konto noch nicht gestartet). |
 | Rückfrage „… Elemente fehlen lokal“ obwohl nichts gelöscht wurde | *Lokal wiederherstellen* wählen. Ursachen: unterbrochenes Trennen, Laufwerk zwischenzeitlich nicht verfügbar. |
 | „Ordner kann noch nicht ausgeschlossen werden“ | Unterhalb wartet noch etwas auf den Upload. Warten, bis das Konto auf *Aktuell* steht (offene Dateien schließen), dann erneut *Ordner auswählen …*. |
