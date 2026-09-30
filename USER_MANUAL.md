@@ -1,7 +1,7 @@
 # pCloud Sync – Benutzerhandbuch
 
 Dieses Handbuch beschreibt die Bedienung von pCloud Sync (pCloudSyncClient) aus Sicht der Anwenderin und des Anwenders
-(Stand 1.6.0). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
+(Stand 1.6.2). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
 
 ## Inhalt
 
@@ -223,8 +223,10 @@ Typische Zeilen und was sie bedeuten:
 ## 6. Einstellungen
 
 Die Einstellungen sind in drei Bereiche gegliedert (Liste links): *Konten* gilt je Konto, *Synchronisation* und
-*Allgemein* gelten für alle Konten. Lange Beschriftungen brechen um, damit auch übersetzte Texte vollständig sichtbar
-bleiben. *Speichern* übernimmt alles, ohne die laufende
+*Allgemein* gelten für alle Konten. Jede Einstellung ist eine Karte mit Titel, Erklärung und dem Steuerelement rechts
+(Schalter, Zahlenfeld, Auswahlliste) bzw. darunter (Pfade, Auswahllisten mit langen Einträgen) – wie in den
+Windows-11-Einstellungen. Das Fenster lässt sich vergrößern; die Karten füllen die Breite, lange Texte brechen um.
+Mausrad über der Seite blättert, über einem Zahlenfeld nur, wenn es den Fokus hat. *Speichern* übernimmt alles, ohne die laufende
 Synchronisation zu unterbrechen – nur Änderungen an Ordnern, Parallelität der Übertragungen, Lösch-Schwelle oder
 Vollabgleich-Intervall (nur in `settings.json`) starten die betroffene Engine neu.
 
@@ -235,12 +237,12 @@ Werte des gewählten Kontos. *Speichern und anmelden* bzw. *Speichern und neu an
 
 | Option | Bedeutung | Standard |
 |---|---|---|
-| Lokaler Ordner | Sync-Ordner; NTFS, fest, kein anderer Sync-Ordner, keine Junction, nicht innerhalb des Ordners eines anderen Kontos. Nur ohne verbundenes Konto änderbar („Zum Ändern der Ordner zuerst das Konto trennen.“). | `D:\Cloud\pCloud` bzw. `%USERPROFILE%\pCloud`, weitere Konten `… (2)` |
-| pCloud-Ordner | Pfad in pCloud (`/` = alles). Nur ohne verbundenes Konto änderbar. | `/` |
-| Neue Dateien: Nur online | Neu in pCloud eingetroffene Dateien erscheinen als Platzhalter | ● |
-| … Lokal neu angelegte Dateien nach dem Hochladen wieder nur online halten | Eine hier erstellte Datei wird nach dem Upload (mit 10 Minuten Verzögerung, falls sie nicht mehr benutzt wird) wieder zur Online-Datei | an |
-| Neue Dateien: Immer lokal | Neu in pCloud eingetroffene Dateien werden automatisch geladen und behalten | |
-| Max. Cache | Obergrenze in GB für automatisch geladene (nicht fest behaltene) Dateien; 0 = unbegrenzt. Die am längsten nicht benutzten werden zuerst wieder nur online gehalten. Der Hinweis zeigt die aktuelle Belegung. | 0 |
+| Lokaler Ordner (*Durchsuchen …*) | Sync-Ordner; NTFS, fest, kein anderer Sync-Ordner, keine Junction, nicht innerhalb des Ordners eines anderen Kontos. Nur ohne verbundenes Konto änderbar („Zum Ändern der Ordner zuerst das Konto trennen.“). | `D:\Cloud\pCloud` bzw. `%USERPROFILE%\pCloud`, weitere Konten `… (2)` |
+| Ordner in pCloud | Pfad in pCloud (`/` = alles). Nur ohne verbundenes Konto änderbar. | `/` |
+| Neue Dateien aus pCloud (Auswahlliste): *Nur online* | Neu in pCloud eingetroffene Dateien erscheinen als Platzhalter | ● |
+| Neue lokale Dateien nach dem Hochladen wieder nur online halten (Schalter) | Eine hier erstellte Datei wird nach dem Upload (mit 10 Minuten Verzögerung, falls sie nicht mehr benutzt wird) wieder zur Online-Datei | an |
+| Neue Dateien aus pCloud: *Immer lokal* | Neu in pCloud eingetroffene Dateien werden automatisch geladen und behalten | |
+| Cache-Obergrenze (GB) | Obergrenze für automatisch geladene (nicht fest behaltene) Dateien; 0 = unbegrenzt. Die am längsten nicht benutzten werden zuerst wieder nur online gehalten. Die Erklärung zeigt die aktuelle Belegung. | 0 |
 | Rückfrage ab Löschungen | Ab so vielen lokal fehlenden Elementen fragt der Client, statt in pCloud zu löschen (mindestens 5) | 50 |
 | Nicht hochladen | Eigene Ausschlussmuster, mit `;` getrennt, `*` und `?` erlaubt (siehe [20](#20-ausschlüsse)) | leer |
 
@@ -256,12 +258,12 @@ Tray-Menü über *Ordner auswählen …* (siehe [14](#14-ordner-auswählen-selek
 | Parallele Downloads | Gleichzeitige Downloads (Laden bei Bedarf, „Immer behalten“), je Konto | 6 |
 | Parallele Uploads | Gleichzeitige Uploads, je Konto | 3 |
 | Parallele Ordnerabfragen | Beim ordnerweisen Einlesen großer Konten. Wirkt sofort, auch auf ein laufendes Einlesen. | 8 |
-| Upload höchstens / Download höchstens | Mbit/s, 0 = unbegrenzt. Gilt je Konto für alle Übertragungen gemeinsam und sofort. Die Download-Grenze gilt auch beim Öffnen von Dateien. | 0 |
+| Upload höchstens / Download höchstens (Mbit/s) | 0 = unbegrenzt. Gilt je Konto für alle Übertragungen gemeinsam und sofort. Die Download-Grenze gilt auch beim Öffnen von Dateien. | 0 |
 | Bei getakteter Verbindung pausieren | Automatische Pause bei Mobilfunk, Hotspot oder „getaktet“ in den Windows-Netzwerkeinstellungen (siehe [22](#22-automatische-pause)) | an |
 | Im Energiesparmodus pausieren | Automatische Pause, solange der Windows-Energiesparmodus aktiv ist | an |
 | Ransomware-Schutz | Bei verdächtigen Massenänderungen Uploads anhalten und nachfragen (siehe [17](#17-ransomware-schutz)) | an |
-| Geänderte große Dateien blockweise hochladen (nur geänderte Teile) | Nur die geänderten Blöcke einer Datei übertragen, die in pCloud schon liegt (siehe [21](#21-bandbreite-und-parallelität)) | an |
-| Blockweise ab … MB | Ab dieser Dateigröße lohnt sich der blockweise Upload; kleinere Dateien gehen vollständig hoch | 8 |
+| Geänderte große Dateien blockweise hochladen | Nur die geänderten Blöcke einer Datei übertragen, die in pCloud schon liegt (siehe [21](#21-bandbreite-und-parallelität)) | an |
+| Blockweise ab (MB) | Ab dieser Dateigröße lohnt sich der blockweise Upload; kleinere Dateien gehen vollständig hoch | 8 |
 
 ### 6.3 Allgemein
 
@@ -271,7 +273,7 @@ Tray-Menü über *Ordner auswählen …* (siehe [14](#14-ordner-auswählen-selek
 | Mit Windows starten | Autostart-Eintrag für den Benutzer | wie im Setup gewählt |
 | Pausiert starten | Der Client startet, überträgt aber nichts, bis *Fortsetzen* gewählt wird | aus |
 | Ausführliches Protokoll | Zusätzliche Debug-Zeilen (Hydration je Bereich, Übergaben, Wiederholungen, Vorschaubilder) | aus |
-| Täglich nach Updates suchen und anbieten | Prüfung gegen die GitHub Releases (siehe [23](#23-updates)) | an |
+| Täglich nach Updates suchen | Prüfung gegen die GitHub Releases (siehe [23](#23-updates)) | an |
 
 ---
 
