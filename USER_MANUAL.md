@@ -1,7 +1,7 @@
 # pCloud Sync – Benutzerhandbuch
 
 Dieses Handbuch beschreibt die Bedienung von pCloud Sync (pCloudSyncClient) aus Sicht der Anwenderin und des Anwenders
-(Stand 1.5.1). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
+(Stand 1.5.2). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
 
 ## Inhalt
 
@@ -138,6 +138,13 @@ Für alle, die keinen Token aus der Passwort-Anmeldung wollen oder ohnehin eine 
 
 Das Client-Secret liegt ebenfalls nur im Anmeldeinformationsspeicher, nicht in `settings.json`. Dieselbe App dient allen
 Konten.
+
+**Einschränkung:** Mit dem Zugang einer eigenen App lehnt pCloud einige Funktionen ab: frühere **Versionen** (anzeigen
+und wiederherstellen), **Upload-Links** und **Freigaben an bestimmte Personen** (einladen, Rechte ändern, beenden) sowie
+das Auflisten bestehender Personen-Freigaben (pCloud-Fehler 1000 „Log in required“ bzw. 2076). Synchronisation,
+Behalten/Freigeben und öffentliche Links funktionieren. Wer diese Funktionen braucht, stellt auf *E-Mail und Passwort* um
+und meldet das Konto im Tray-Menü mit *Neu anmelden …* neu an (siehe [3.3](#33-neu-anmelden-zugang-ersetzen-ohne-zu-trennen));
+Sync-Ordner und Zustand bleiben erhalten. Die Dialoge nennen seit 1.5.2 diesen Grund statt der Rohmeldung.
 
 ### 3.3 Neu anmelden (Zugang ersetzen, ohne zu trennen)
 
