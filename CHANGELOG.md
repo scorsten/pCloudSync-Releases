@@ -7,6 +7,20 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.4.1 – 2026-09-30
+
+### Behoben
+
+- Freigeben-Dialog eines Ordners: pCloud beantwortet `listuploadlinks` bei manchen Anmeldearten mit 1000 „Log in
+  required“, und die ganze Liste *Bestehende Freigaben* blieb mit Fehler leer. Jetzt wird jede Liste (Links, Upload-Links,
+  Personen) einzeln gelesen; was pCloud verweigert, fehlt nur und wird als Hinweis genannt. Gleiches für das Lesen der
+  Freigaben für die Explorer-Statusspalte.
+- Vorschaubilder: Trafen die direkte Anfrage und das Vorausladen dasselbe Bild genau im Übergang, wurde es ein zweites
+  Mal bei pCloud abgerufen; jetzt liest der zweite Abruf die inzwischen gefüllte Ablage.
+
+- `tools/Deploy-LicenseServer.ps1` und `tools/Set-PaddleShop.ps1` mit UTF-8-BOM gespeichert: Windows PowerShell 5.1
+  liest Skripte ohne BOM als ANSI, der Gedankenstrich „–“ wurde dabei zu einem Anführungszeichen und brach das Parsen ab.
+
 ## 1.4.0 – 2026-09-29
 
 ### Neu
