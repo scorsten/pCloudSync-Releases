@@ -7,6 +7,28 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.5.0 – 2026-09-30
+
+### Neu
+
+- **Mehrsprachige Oberfläche:** Deutsch, Englisch, Französisch, Spanisch, Portugiesisch (Portugal und Brasilien),
+  Niederländisch, Italienisch und Türkisch. Standard ist *Automatisch* – die Windows-Anzeigesprache (andere Sprachen →
+  Englisch); umstellbar unter *Einstellungen → Allgemein → Sprache*, sofort wirksam (auch im Tray-Menü, im
+  Explorer-Kontextmenü, in der Statusspalte und im Statusflyout des Explorers). Übersetzt sind alle Fenster, Menüs,
+  Meldungen und Benachrichtigungen; das Protokoll bleibt deutsch. Das Setup wählt seine Sprache ebenfalls nach Windows.
+- **Hilfe** (Tray-Menü → *Hilfe …*): Kurzhilfe in der eingestellten Sprache zu Einrichtung, Nur-online-Dateien,
+  Ordnerauswahl, Konflikten, Freigaben, Versionen, Pausieren und Schutzfunktionen, mehreren Konten, Lizenz und
+  Fehlersuche; dazu der Link zum ausführlichen (deutschen) Handbuch im Download-Repository.
+- **Über pCloud Sync** (Tray-Menü): Version, Lizenzstatus, Hinweise zu Marken und verwendeten Komponenten, Links zu
+  Downloads, Lizenzbedingungen und Protokollordner sowie *Diagnoseangaben kopieren* für Support-Anfragen (Version,
+  Windows, Sprache, Lizenzart, Zahl der Konten – ohne Zugangsdaten oder E-Mail-Adressen).
+
+### Hinweise
+
+- Dateinamen von Konfliktkopien bleiben in jeder Sprache `Name (Konflikt PC Datum).ext`, damit sie auf allen PCs
+  erkannt werden. Der Lizenzvertrag (EULA) ist der deutsche Originaltext.
+- Das Benutzerhandbuch liegt jetzt auch im Download-Repository (`USER_MANUAL.md`, wird bei jedem Release aktualisiert).
+
 ## 1.4.2 – 2026-09-30
 
 ### Neu
