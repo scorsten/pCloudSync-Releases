@@ -7,6 +7,17 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.5.1 – 2026-09-30
+
+### Behoben
+
+- **Kontextmenü ohne Wirkung nach einem Update** (seit dem stillen Update auf 1.4.2): Das Setup konnte das
+  Windows-11-Paket des Kontextmenüs nicht aktualisieren, solange der Explorer es benutzte. Das alte Paket blieb mit den
+  ersetzten Dateien als „Modified, NeedsRemediation“ registriert; Windows startete es nicht mehr, und *Freigeben …*,
+  *Versionen …* usw. taten nichts. Das Setup aktualisiert das Paket jetzt erzwungen (mit Wiederholung), und pCloud Sync
+  prüft beim Start Version und Zustand des Pakets und registriert es bei Bedarf selbst neu (Protokoll:
+  „Kontextmenü-Paket …“, Details in `logs\shell-menu.log`).
+
 ## 1.5.0 – 2026-09-30
 
 ### Neu
