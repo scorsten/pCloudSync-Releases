@@ -7,6 +7,16 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.6.1 – 2026-09-30
+
+### Behoben
+
+- **Einstellungen, Seite Konten:** Kontrollkästchen und Optionsfelder („Lokal neu angelegte Dateien …“, „Immer lokal …“)
+  und die Schaltfläche *Konto hinzufügen* wurden in 1.6.0 weiterhin abgeschnitten. Ursache: Mit `AutoSize` schneidet
+  WinForms an einer Maximalbreite ab, statt umzubrechen, und Schaltflächen hatten beim Anpassen noch ihre Standardbreite.
+  Jetzt brechen lange Optionstexte immer um, und die Kontoauswahl wird um die tatsächliche Breite der Schaltfläche
+  schmaler.
+
 ## 1.6.0 – 2026-09-30
 
 ### Entfernt
