@@ -7,6 +7,41 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.7.0 – 2026-09-30
+
+### Neu
+
+- **Konto entfernen** in den Einstellungen (neben *Konto hinzufügen*): nie angemeldete Konten verschwinden sofort,
+  verbundene werden nach *Speichern und trennen* wie über das Tray-Menü getrennt (mit letzter Rückfrage).
+- **Ordner auswählen …** direkt auf der Karte *Ordnerauswahl* der Einstellungen (verbundenes Konto, Vollversion).
+- **Hinweise anzeigen** (Einstellungen → Allgemein → Benachrichtigungen): reine Hinweis-Benachrichtigungen lassen sich
+  abschalten; Warnungen, Fehler, Konflikte und Freigabe-Anfragen erscheinen weiterhin.
+- Einstellungen: gleich breite Schaltflächen und Zahlenfelder; die Bereiche links sind per Tastatur erreichbar.
+
+### Behoben
+
+- *Konto hinzufügen* in den Einstellungen umging die Lizenzprüfung für weitere Konten (das Tray-Menü fragte, der Dialog
+  nicht); jetzt fragt auch der Dialog.
+- Zwei Einstellungsfenster gleichzeitig (Tray-Menü blieb bedienbar) konnten sich gegenseitig überschreiben, im
+  schlimmsten Fall ein frisch angemeldetes Konto ohne Trennen entfernen. Es gibt nur noch eines; ein zweiter Aufruf
+  holt es nach vorne.
+- *Konto entfernen …* im Tray-Menü bei einem angemeldeten Konto ohne laufende Engine (z. B. weiteres Konto ohne Lizenz)
+  entfernte nur den Eintrag und ließ Platzhalter, Sync-Root-Registrierung, Zustand und Zugang zurück; jetzt wird
+  richtig getrennt.
+- *Speichern und anmelden* übernahm geänderte globale Werte (Bandbreite, Parallelität …) nicht in die schon laufenden
+  Konten; Änderungen an einem Konto wurden beim ersten Speichern nicht erkannt (geteilte Profilobjekte), und der
+  Kontoname konnte in `settings.json` leer bleiben.
+- Ausnahmen in Dialogen (Freigeben, Versionen, Konflikte …) zeigten den .NET-Standarddialog, dessen „Beenden“ die
+  ganze App schloss; jetzt eine normale Fehlermeldung. Zwischenablage-Fehler beim Kopieren eines Links werden angezeigt.
+- Der Hinweis auf einen veralteten App-Zugang (OAuth) erschien beim normalen Start nicht.
+- *pCloud im Browser öffnen* öffnete immer my.pcloud.com – jetzt die Weboberfläche des Kontos (EU: e.pcloud.com).
+- Ein in den Einstellungen angelegtes, nicht angemeldetes Konto zeigte im Menü „Gestoppt:“ statt „Nicht angemeldet“.
+- KFM-Dialog ließ sich während eines laufenden Verschiebens schließen (Ergebnis ging verloren); *Bekannte Ordner …* ohne
+  laufendes Konto tat nichts statt zu erklären. Nach einem Sprachwechsel zeigte *Lizenz …* den Zusatz (Testphase/
+  Basisversion) erst nach einer Stunde. Beim Entfernen eines Kontos blieb ein Pause-Timer aktiv.
+- Übersetzung: Kontokopf, Speicherplatz („… von … belegt“), Aktivitätsfenster, Freigabeliste, Versionen, Konflikte,
+  KFM-Hinweise und die Rückfragen zum Trennen waren noch deutsch.
+
 ## 1.6.2 – 2026-09-30
 
 ### Geändert
