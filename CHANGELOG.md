@@ -7,6 +7,23 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.6.2 – 2026-09-30
+
+### Geändert
+
+- **Einstellungen neu gestaltet** im Stil der Windows-11-Einstellungen: je Einstellung eine Karte mit Titel,
+  Erklärung und Steuerelement, Schalter statt Kontrollkästchen, Auswahlliste für „Neue Dateien aus pCloud“,
+  Abschnittsüberschriften (Ordner, Speicherplatz, Schutz und Ausschlüsse, Parallelität, Bandbreite, …). Das Fenster
+  ist größenveränderbar; die Karten füllen die Breite, Texte brechen um – nichts hat mehr eine feste Pixelbreite.
+  Das Mausrad blättert die Seite, statt über einem Zahlenfeld dessen Wert zu ändern.
+
+### Behoben
+
+- Die Breitenanpassung aus 1.6.0/1.6.1 griff nie (Fehler in der Spaltenermittlung); daher blieben Felder
+  abgeschnitten. Mit dem neuen Aufbau entfällt sie.
+- Auf Bildschirmen mit 125 % oder mehr skalierten die Dialoge nur die Schrift, nicht die Maße
+  (`AutoScaleDimensions` fehlte) – jetzt alle Dialoge.
+
 ## 1.6.1 – 2026-09-30
 
 ### Behoben
