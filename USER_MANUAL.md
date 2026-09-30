@@ -1,7 +1,7 @@
 # pCloud Sync – Benutzerhandbuch
 
 Dieses Handbuch beschreibt die Bedienung von pCloud Sync (pCloudSyncClient) aus Sicht der Anwenderin und des Anwenders
-(Stand 1.5.2). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
+(Stand 1.6.0). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
 
 ## Inhalt
 
@@ -88,8 +88,7 @@ Explorer. Ein Prozess bedient alle Konten.
      ersten Start des Setups: *Weitere Informationen* → *Trotzdem ausführen*.
 2. Beim ersten Start öffnen sich die **Einstellungen** mit dem Bereich *Konten*; das erste Konto ist bereits angelegt:
    - Lokalen Ordner und pCloud-Ordner prüfen. Beides lässt sich später nur nach *Konto trennen* ändern.
-   - Im Bereich *Anmeldung* das Anmeldeverfahren wählen (siehe [Anmeldung](#3-anmeldung)).
-   - *Speichern und anmelden*.
+   - *Speichern und anmelden* – der Anmeldedialog fragt nach E-Mail und Passwort (siehe [Anmeldung](#3-anmeldung)).
 3. Nach der Anmeldung beginnt der **erste Abgleich**. Der Client liest den Ordnerbaum aus pCloud und legt Platzhalter an –
    sie erscheinen im Explorer bereits, während das Einlesen läuft. Bei sehr großen Konten (mehr als eine Million
    Elemente) dauert das Einlesen mehrere Minuten; das Aktivitätsfenster zeigt den Fortschritt
@@ -108,10 +107,10 @@ der lokale Zustand bleibt erhalten, der nächste Start gleicht nur lokal ab (run
 
 ## 3. Anmeldung
 
-Das Anmeldeverfahren gilt für alle Konten (Einstellungen → *Anmeldung*); angemeldet wird je Konto über *Anmelden …* im
-Tray-Menü oder *Speichern und anmelden* in den Einstellungen.
+Angemeldet wird je Konto über *Anmelden …* im Tray-Menü oder *Speichern und anmelden* in den Einstellungen – mit E-Mail
+und Passwort des pCloud-Kontos.
 
-### 3.1 E-Mail und Passwort (Standard)
+### 3.1 E-Mail und Passwort
 
 Keine Vorbereitung bei pCloud nötig. Das Passwort wird **nicht übertragen**: Der Client holt von pCloud einen Digest und
 sendet `sha1(passwort + sha1(email) + digest)` – genau wie der offizielle pCloud-Client. Gespeichert wird nur das
@@ -123,33 +122,18 @@ erspart die Abfrage beim nächsten Mal.
 
 EU- und US-Rechenzentrum werden automatisch erkannt (der Client probiert `api.pcloud.com` und `eapi.pcloud.com`).
 
-### 3.2 Eigene pCloud-App (OAuth)
+**Eigene pCloud-App (OAuth):** Bis 1.5 ließ sich pCloud Sync auch über eine bei pCloud registrierte App anmelden. pCloud
+verweigert solchen Zugängen aber Versionen, Upload-Links und Freigaben an bestimmte Personen; seit 1.6 gibt es diese
+Anmeldung deshalb nicht mehr. Ein noch vorhandener App-Zugang synchronisiert weiter; nach dem Start weist eine
+Benachrichtigung auf das Neu-Anmelden hin (Klick darauf öffnet die Anmeldung, siehe 3.2). Das Client-Secret der App
+entfernt pCloud Sync aus dem Anmeldeinformationsspeicher; die App selbst kann auf <https://docs.pcloud.com> gelöscht
+werden.
 
-Für alle, die keinen Token aus der Passwort-Anmeldung wollen oder ohnehin eine App bei pCloud registriert haben.
+### 3.2 Neu anmelden (Zugang ersetzen, ohne zu trennen)
 
-1. Auf <https://docs.pcloud.com> anmelden → *My applications* → *New app*.
-2. Namen vergeben, unter *Settings* als Redirect-URI `http://localhost:53682/callback` eintragen (Port ist in den
-   Einstellungen änderbar). *Allow implicit grant* wird nicht benötigt und kann auf *Disallow* stehen.
-3. Nach der Freigabe durch pCloud **Client-ID** und **Client-Secret** in die Einstellungen eintragen.
-4. Haken bei *Redirect-URI ist in der pCloud-App eingetragen* setzen. Ist er gesetzt, öffnet sich der Browser, du erlaubst
-   den Zugriff, und die Anmeldung schließt sich von selbst ab. Ohne Redirect-URI zeigt pCloud stattdessen einen Code
-   an, den du in den Dialog *Code aus dem Browser einfügen* kopierst (auch die komplette Adresszeile funktioniert).
-5. *Speichern und anmelden*.
-
-Das Client-Secret liegt ebenfalls nur im Anmeldeinformationsspeicher, nicht in `settings.json`. Dieselbe App dient allen
-Konten.
-
-**Einschränkung:** Mit dem Zugang einer eigenen App lehnt pCloud einige Funktionen ab: frühere **Versionen** (anzeigen
-und wiederherstellen), **Upload-Links** und **Freigaben an bestimmte Personen** (einladen, Rechte ändern, beenden) sowie
-das Auflisten bestehender Personen-Freigaben (pCloud-Fehler 1000 „Log in required“ bzw. 2076). Synchronisation,
-Behalten/Freigeben und öffentliche Links funktionieren. Wer diese Funktionen braucht, stellt auf *E-Mail und Passwort* um
-und meldet das Konto im Tray-Menü mit *Neu anmelden …* neu an (siehe [3.3](#33-neu-anmelden-zugang-ersetzen-ohne-zu-trennen));
-Sync-Ordner und Zustand bleiben erhalten. Die Dialoge nennen seit 1.5.2 diesen Grund statt der Rohmeldung.
-
-### 3.3 Neu anmelden (Zugang ersetzen, ohne zu trennen)
-
-Tray-Menü → im Abschnitt des Kontos **Neu anmelden (z. B. mit eigener pCloud-App) …** oder in den Einstellungen
-*Speichern und neu anmelden*. Der Client meldet sich mit dem gewählten Verfahren neu an und **ersetzt nur den Zugang**.
+Tray-Menü → im Abschnitt des Kontos **Neu anmelden …** oder in den Einstellungen *Speichern und neu anmelden*. Der
+Client meldet sich neu an und **ersetzt nur den Zugang** (z. B. nach einer Passwortänderung oder beim Umstieg von einem
+früheren App-Zugang).
 Sync-Ordner, Platzhalter und der gespeicherte Stand bleiben unverändert; nach dem Start folgt nur ein kurzer lokaler
 Abgleich.
 
@@ -176,7 +160,7 @@ Abschnitt**, dann die allgemeinen Einträge:
 | **Ordner auswählen …** | Öffnet die [Ordnerauswahl](#14-ordner-auswählen-selektive-synchronisation) (nur bei laufender Verbindung). |
 | **Papierkorb (Browser)** | Öffnet den pCloud-Papierkorb dieses Kontos auf my.pcloud.com (gelöschte Dateien wiederherstellen, siehe [16](#16-löschen-papierkorb-und-die-rückfrage-bei-vielen-löschungen)). |
 | **Rewind – Zeitpunkt wiederherstellen (Browser)** | Öffnet pCloud Rewind: den Stand des Kontos zu einem früheren Zeitpunkt ansehen und wiederherstellen (Umfang je nach pCloud-Tarif). |
-| **Anmelden …** / **Neu anmelden …** | Anmeldung bzw. Zugang ersetzen (siehe [3.3](#33-neu-anmelden-zugang-ersetzen-ohne-zu-trennen)). |
+| **Anmelden …** / **Neu anmelden …** | Anmeldung bzw. Zugang ersetzen (siehe [3.3](#32-neu-anmelden-zugang-ersetzen-ohne-zu-trennen)). |
 | **Konto trennen …** / **Konto entfernen …** | Trennt den PC von diesem Konto (siehe [24](#24-neu-anmelden-und-konto-trennen)). Ein nie angemeldetes Konto wird nur aus der Liste entfernt. |
 | **Konto hinzufügen …** | Legt ein weiteres Konto an und öffnet die Einstellungen (siehe [7](#7-mehrere-konten)). |
 | **Aktivität und Protokoll …** | Öffnet das [Aktivitätsfenster](#5-das-aktivitätsfenster) (auch per Linksklick auf das Symbol). |
@@ -238,8 +222,9 @@ Typische Zeilen und was sie bedeuten:
 
 ## 6. Einstellungen
 
-Die Einstellungen sind in vier Bereiche gegliedert (Liste links): *Konten* gilt je Konto, *Anmeldung*,
-*Synchronisation* und *Allgemein* gelten für alle Konten. *Speichern* übernimmt alles, ohne die laufende
+Die Einstellungen sind in drei Bereiche gegliedert (Liste links): *Konten* gilt je Konto, *Synchronisation* und
+*Allgemein* gelten für alle Konten. Lange Beschriftungen brechen um, damit auch übersetzte Texte vollständig sichtbar
+bleiben. *Speichern* übernimmt alles, ohne die laufende
 Synchronisation zu unterbrechen – nur Änderungen an Ordnern, Parallelität der Übertragungen, Lösch-Schwelle oder
 Vollabgleich-Intervall (nur in `settings.json`) starten die betroffene Engine neu.
 
@@ -264,17 +249,7 @@ Tray-Menü über *Ordner auswählen …* (siehe [14](#14-ordner-auswählen-selek
 *Immer auf diesem Gerät behalten* oder *Speicherplatz freigeben* haben Vorrang vor den Speicher-Regeln (siehe
 [13](#13-speicherplatz-lokal-oder-online)).
 
-### 6.2 Anmeldung
-
-| Option | Bedeutung | Standard |
-|---|---|---|
-| E-Mail und Passwort | Anmeldung per Digest-Verfahren, keine App nötig | ● |
-| Eigene pCloud-App (OAuth) | Anmeldung über eine bei pCloud registrierte App | |
-| Client-ID / Client-Secret | Zugangsdaten der App (Secret nur im Anmeldeinformationsspeicher) | leer |
-| Redirect-URI ist in der pCloud-App eingetragen | Anmeldung ohne Code-Eingabe | aus |
-| Redirect-Port | Port der Redirect-URI `http://localhost:<Port>/callback` | 53682 |
-
-### 6.3 Synchronisation
+### 6.2 Synchronisation
 
 | Option | Bedeutung | Standard |
 |---|---|---|
@@ -288,7 +263,7 @@ Tray-Menü über *Ordner auswählen …* (siehe [14](#14-ordner-auswählen-selek
 | Geänderte große Dateien blockweise hochladen (nur geänderte Teile) | Nur die geänderten Blöcke einer Datei übertragen, die in pCloud schon liegt (siehe [21](#21-bandbreite-und-parallelität)) | an |
 | Blockweise ab … MB | Ab dieser Dateigröße lohnt sich der blockweise Upload; kleinere Dateien gehen vollständig hoch | 8 |
 
-### 6.4 Allgemein
+### 6.3 Allgemein
 
 | Option | Bedeutung | Standard |
 |---|---|---|
@@ -311,7 +286,7 @@ bekommt:
 - einen eigenen gespeicherten Stand (`state.db` bzw. `state-<Kennung>.db`) und eine eigene Anmeldung im
   Windows-Anmeldeinformationsspeicher.
 
-Gemeinsam für alle Konten gelten Anmeldeverfahren (und pCloud-App), Parallelität, Bandbreitengrenzen, Auto-Pause,
+Gemeinsam für alle Konten gelten Parallelität, Bandbreitengrenzen, Auto-Pause,
 Ransomware-Schutz, Autostart, Protokoll und Updates.
 
 **Konto hinzufügen.** Tray-Menü → *Konto hinzufügen …* (oder in den Einstellungen → *Konten* → *Konto hinzufügen*).
@@ -789,7 +764,7 @@ Bedingungen kommen und gehen.
 **Pause auf Zeit:** *Pausieren* im Abschnitt des Kontos bietet 2, 8 oder 24 Stunden sowie *Bis ich fortsetze*. Bei
 einer Pause auf Zeit heißt der Menüpunkt danach „Fortsetzen (sonst automatisch um 17:30)“; nach Ablauf läuft die
 Synchronisation von selbst weiter. Ein Neustart von pCloud Sync beendet jede Pause (die Uhr läuft nur in der laufenden
-Sitzung); wer pausiert starten möchte, nutzt die Einstellung *Pausiert starten* (siehe [6.4](#64-allgemein)).
+Sitzung); wer pausiert starten möchte, nutzt die Einstellung *Pausiert starten* (siehe [6.3](#63-allgemein)).
 
 ---
 
@@ -822,7 +797,7 @@ wird über die Prüfsumme abgesichert. Signiert sind die Builds nur, wenn in der
 
 ## 24. Neu anmelden und Konto trennen
 
-**Neu anmelden** (Zugang ersetzen): siehe [3.3](#33-neu-anmelden-zugang-ersetzen-ohne-zu-trennen). Der Ordner bleibt.
+**Neu anmelden** (Zugang ersetzen): siehe [3.3](#32-neu-anmelden-zugang-ersetzen-ohne-zu-trennen). Der Ordner bleibt.
 
 **Konto trennen** (Tray-Menü, Abschnitt des Kontos): trennt den PC vollständig von diesem Konto.
 
@@ -838,7 +813,7 @@ einzeln entfernt); der Fortschritt steht im Aktivitätsfenster. Während des Tre
 Beenden gesperrt. Wird es dennoch unterbrochen (z. B. Neustart), setzt der Client es beim nächsten Start fort – und
 synchronisiert dieses Konto bis dahin nicht, damit die entfernten Online-Dateien nie als Löschung nach pCloud gelangen.
 
-Der Dialog bietet als Alternative direkt *Nur neu anmelden* an, falls du eigentlich nur das Anmeldeverfahren wechseln
+Der Dialog bietet als Alternative direkt *Nur neu anmelden* an, falls du eigentlich nur den Zugang erneuern
 wolltest. Ein Konto, das nie angemeldet war, heißt im Menü *Konto entfernen …* und wird nur aus der Liste genommen.
 
 ---
@@ -856,7 +831,7 @@ Select-String -Path "$env:LOCALAPPDATA\PCloudSync\logs\*" -Pattern 'WARN|ERROR|s
 |---|---|
 | „pCloud Sync läuft bereits“ beim Start | Eine Instanz läuft (Symbol im Infobereich, ggf. hinter dem Pfeil). |
 | Status **Offline – neuer Versuch folgt** | Kein Netz beim Start. Der Client versucht es automatisch erneut (20 s, 40 s, … bis 5 min), je Konto. |
-| Status **Anmeldung abgelaufen – bitte neu anmelden** | Token ungültig (Passwort geändert, App widerrufen). Tray-Menü → Abschnitt des Kontos → *Anmelden …*. |
+| Status **Anmeldung abgelaufen – bitte neu anmelden** | Token ungültig (z. B. Passwort geändert). Tray-Menü → Abschnitt des Kontos → *Anmelden …*. |
 | Status **Pausiert – getaktete Verbindung**, obwohl du im WLAN bist | Windows stuft die Verbindung als getaktet ein (Einstellungen → Netzwerk und Internet → Eigenschaften der Verbindung → *Getaktete Verbindung*). Dort abschalten, *Trotzdem fortsetzen* wählen oder die Option in den Einstellungen ausschalten (siehe [22](#22-automatische-pause)). |
 | Rückfrage **Verdächtige Massenänderung**, aber die Änderungen sind gewollt | *Weiter synchronisieren* – die Endungen gelten danach als bekannt. Bei wiederholten Fehlalarmen eines Programms den Schutz in den Einstellungen abschalten (siehe [17](#17-ransomware-schutz)). |
 | Online-Datei lässt sich nicht öffnen | Client beendet oder offline. Client starten bzw. Verbindung prüfen. |
