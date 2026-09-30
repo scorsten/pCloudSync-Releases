@@ -1,7 +1,7 @@
 # pCloud Sync – Benutzerhandbuch
 
 Dieses Handbuch beschreibt die Bedienung von pCloud Sync (pCloudSyncClient) aus Sicht der Anwenderin und des Anwenders
-(Stand 1.6.2). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
+(Stand 1.7.0). Die technischen Hintergründe stehen in der [Technischen Referenz](TECHNICAL_REFERENCE.md).
 
 ## Inhalt
 
@@ -167,8 +167,8 @@ Abschnitt**, dann die allgemeinen Einträge:
 | **3 Konflikte lösen …** | Nur sichtbar, wenn es Konfliktkopien gibt (alle Konten zusammen): öffnet den [Konfliktdialog](#18-konflikte). |
 | **Bekannte Ordner nach pCloud verschieben (KFM) …** | Öffnet den [KFM-Dialog](#15-known-folder-move--desktop-dokumente--co); bei mehreren verbundenen Konten fragt er zuerst nach dem Zielkonto. |
 | **Einstellungen …** | Öffnet die [Einstellungen](#6-einstellungen). |
-| **Lizenz …** / **Lizenz … (Testphase: noch 12 Tage)** | Lizenzstatus, Schlüssel eingeben, PC freigeben (siehe [28](#28-lizenz)). |
-| **pCloud im Browser öffnen** | Öffnet <https://my.pcloud.com>. |
+| **Lizenz …** / **Lizenz … (Testphase: noch 12 Tage)** / **Lizenz … (Basisversion)** | Lizenzstatus, kaufen, Schlüssel eingeben, PC freigeben (siehe [28](#28-lizenz)); in der Entwicklerversion ausgeblendet. |
+| **pCloud im Browser öffnen** | Öffnet die Weboberfläche des ersten verbundenen Kontos (EU: e.pcloud.com, US: my.pcloud.com). |
 | **Nach Updates suchen …** / **Update auf 1.0.5 installieren …** | Prüft sofort auf eine neue Version bzw. installiert die bereits gefundene (siehe [23](#23-updates)). |
 | **Hilfe …** | Kurzhilfe in der eingestellten Sprache, mit Link zu diesem Handbuch (siehe [29](#29-sprache-hilfe-und-info)). |
 | **Über pCloud Sync …** | Version, Lizenzstatus, Lizenzbedingungen, Diagnoseangaben für den Support (siehe [29](#29-sprache-hilfe-und-info)). |
@@ -232,8 +232,15 @@ Vollabgleich-Intervall (nur in `settings.json`) starten die betroffene Engine ne
 
 ### 6.1 Konten
 
-Oben die Auswahlliste der Konten (E-Mail bzw. „Neues Konto“ und Sync-Ordner) mit *Konto hinzufügen*; darunter die
-Werte des gewählten Kontos. *Speichern und anmelden* bzw. *Speichern und neu anmelden* gilt für das gewählte Konto.
+Oben die Auswahlliste der Konten (E-Mail bzw. „Neues Konto“ und Sync-Ordner) mit *Konto hinzufügen* (weitere Konten
+nur in der Vollversion, sonst fragt pCloud Sync nach einer Lizenz) und *Konto entfernen*; darunter die Werte des
+gewählten Kontos. *Speichern und anmelden* bzw. *Speichern und neu anmelden* gilt für das gewählte Konto.
+
+*Konto entfernen* nimmt ein nie angemeldetes Konto sofort aus der Liste (der Ordner auf dem PC bleibt). Ein
+verbundenes Konto wird nach *Speichern und trennen* von diesem PC getrennt – dieselbe Prozedur wie *Konto trennen* im
+Tray-Menü, mit einer letzten Rückfrage (siehe [24](#24-neu-anmelden-und-konto-trennen)). Die Karte *Ordnerauswahl*
+zeigt, wie viele pCloud-Ordner abgewählt sind, und öffnet mit *Ordner auswählen …* die Auswahl (nach dem Speichern,
+nur bei verbundenem Konto und in der Vollversion).
 
 | Option | Bedeutung | Standard |
 |---|---|---|
@@ -274,6 +281,7 @@ Tray-Menü über *Ordner auswählen …* (siehe [14](#14-ordner-auswählen-selek
 | Pausiert starten | Der Client startet, überträgt aber nichts, bis *Fortsetzen* gewählt wird | aus |
 | Ausführliches Protokoll | Zusätzliche Debug-Zeilen (Hydration je Bereich, Übergaben, Wiederholungen, Vorschaubilder) | aus |
 | Täglich nach Updates suchen | Prüfung gegen die GitHub Releases (siehe [23](#23-updates)) | an |
+| Hinweise anzeigen | Benachrichtigungen im Infobereich für reine Hinweise („Link kopiert“, „Speicherplatz wird freigegeben“, verfügbares Update). Warnungen, Fehler, Konflikte und Freigabe-Anfragen erscheinen immer. | an |
 
 ---
 
