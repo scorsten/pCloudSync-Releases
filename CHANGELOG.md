@@ -7,6 +7,16 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.4.2 – 2026-09-30
+
+### Neu
+
+- **Einzelne Datei nur für bestimmte Personen freigeben:** Im Freigeben-Dialog einer Datei verschiebt *In eigenen Ordner
+  verschieben und freigeben …* die Datei in einen neuen Ordner mit ihrem Namen (nach Rückfrage), wartet, bis beides in
+  pCloud angekommen ist, und öffnet den Freigeben-Dialog dieses Ordners – dort *Nur lesen* oder *Lesen und schreiben*.
+  pCloud selbst gibt nur Ordner an Personen frei. Die Datei bleibt dieselbe (Verschieben, kein neuer Upload; Links und
+  Versionen bleiben erhalten). Das geht jetzt auch für Dateien direkt im Sync-Ordner.
+
 ## 1.4.1 – 2026-09-30
 
 ### Behoben
