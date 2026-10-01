@@ -7,6 +7,16 @@ Das Format lehnt sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/
 Der Abschnitt zur jeweils veröffentlichten Version wird von der CI als Beschreibung des GitHub Releases übernommen
 (Überschrift `## <Version>` bis zur nächsten `## `-Überschrift).
 
+## 1.7.1 – 2026-10-01
+
+### Behoben
+
+- **Fehlermeldung „Object reference not set …“ nach *Neu anmelden*:** Die ersetzte Engine lief ihren begonnenen
+  Abgleich (bei großen Konten über eine Minute) nach dem Stopp zu Ende und schrieb dann in den schon geschlossenen
+  Zustand; zugleich überschrieb ihr Fehlerstatus den der neuen Engine (Benachrichtigung). Jetzt bricht der Abgleich an
+  mehreren Stellen ab, ein gestoppter Lauf meldet keine Folgefehler, und nur die aktuelle Engine eines Kontos setzt den
+  Status.
+
 ## 1.7.0 – 2026-09-30
 
 ### Neu
